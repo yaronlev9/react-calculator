@@ -43,14 +43,14 @@ function Calc() {
   function setNum(value){
     if (!secondNum){
       if (!operation){
-        if (firstNum.toString()[0] === '0' && value.toString() === '0' && firstNum.toString().indexOf('.') === -1){
+        if (firstNum.toString()[0] === '0' && firstNum.toString().indexOf('.') === -1){
           return;
         }
         const num1 = firstNum.toString() + value.toString();
         setFirstNum(num1);
       }
       else {
-        if (secondNum.toString()[0] === '0' && value.toString() === '0' && firstNum.toString().indexOf('.') === -1){
+        if (secondNum.toString()[0] === '0' && firstNum.toString().indexOf('.') === -1){
           return;
         }
         const num2 = secondNum.toString() + value.toString();
@@ -58,7 +58,7 @@ function Calc() {
       }
     }
     else {
-      if (secondNum.toString()[0] === '0' && value.toString() === '0' && firstNum.toString().indexOf('.') === -1){
+      if (secondNum.toString()[0] === '0' && firstNum.toString().indexOf('.') === -1){
         return;
       }
       const num2 = secondNum.toString() + value.toString();
@@ -117,10 +117,6 @@ function Calc() {
     const res = first + operation + second;
     if (!res){
       setResult('0');
-      return;
-    }
-    if (res === NaN){
-      setResult(Infinity);
       return;
     }
     setResult(res);

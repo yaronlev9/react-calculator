@@ -69,12 +69,12 @@ describe(`${projectName} - test suite`, () => {
 
       const num1 = Math.floor(Math.random() * 10);
       const num2 = Math.floor(Math.random() * 10);
-
       await page.click(`#digit_${num1}`);
       await page.click(`#digit_${num2}`);
       await page.click(`#op_${test}`);
       await page.click(`#digit_${num1}`);
       await page.click('#equal');
+
       const result = await page.$('.result');
       const resultsValue = await (
         await result.getProperty('innerText')
