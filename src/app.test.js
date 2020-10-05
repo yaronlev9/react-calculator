@@ -28,7 +28,7 @@ const tests = ['plus', 'minus', 'multi', 'divide', 'modulo'];
 const tests_dot = ['plus', 'minus', 'multi', 'divide'];
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-// jest.setTimeout(30000);
+jest.setTimeout(30000);
 const projectName = 'Calculator Challenge';
 describe(`${projectName} - test suite`, () => {
   beforeAll(async () => {

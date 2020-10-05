@@ -86,6 +86,12 @@ function Calc() {
       }
     }
     else if (value === '='){
+      if (operation === '/' && parseFloat(secondNum) === 0){
+        setFirstNum('Error');
+        setSecondNum('');
+        setOperation('');
+        return;
+      }
       const res = calculate(operation, parseFloat(firstNum), parseFloat(secondNum));
       setFirstNum(res);
       setSecondNum('');
@@ -99,7 +105,11 @@ function Calc() {
   function showResult(){
     const first = firstNum === undefined ? '' : firstNum.toString();
     const second = secondNum === undefined ? '' : secondNum.toString();
-    const res = first + ' ' + operation + ' ' + second;
+    const res = first + operation + second;
+    if (!res){
+      setResult('0');
+      return;
+    }
     setResult(res);
   }
   useEffect( () => { showResult()})
