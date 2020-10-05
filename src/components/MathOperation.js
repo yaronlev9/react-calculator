@@ -21,22 +21,22 @@ const operations = {
   dot: { value: '.', className: 'button number', id: 'dot' },
 };
 
-export const operationTypes = Object.keys(operations);
 
 export function MathOperation(props) {
   const { type, onClick } = props;
   const { value, className, id } = operations[type];
-
+  
   return (
     <button
-      className={className}
-      id={id}
-      value={value}
-      key={value}
-      onClick={() => onClick()}
+    className={className}
+    id={id}
+    value={value}
+    key={value}
+    onClick={() => onClick(value)}
     >
       {' '}
       {value}
     </button>
   );
 }
+export const operationTypes = Object.keys(operations);

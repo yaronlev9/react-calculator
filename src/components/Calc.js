@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MathOperation, operationTypes } from './MathOperation';
 import DigitButton from './DigitButton';
 
@@ -8,6 +8,7 @@ import DigitButton from './DigitButton';
  * @param {*} num1 The first num to use in the calculation
  * @param {*} num2 The second num to use in the calculation
  */
+const numbers = ['0','1','2','3','4','5','6','7','8','9'];
 function calculate(operation, num1, num2 = 0) {
   switch (operation) {
     case '+':
@@ -20,9 +21,9 @@ function calculate(operation, num1, num2 = 0) {
       return num1 / num2;
     case '%':
       return num1 % num2;
-    case 'power':
+    case 'x²':
       return Math.pow(num1, 2);
-    case 'sqrt':
+    case '√':
       return Math.sqrt(num1);
   }
 }
@@ -34,21 +35,89 @@ function Calc() {
    * This is a state machine, you'll need to work wisely with React.js State and Lifecycle functionality
    * You can use calculate function for your aid
    */
+  const [firstNum, setFirstNum] = useState('');
+  const [secondNum, setSecondNum] = useState('');
+  const [operation, setOperation] = useState('');
+  const [result, setResult] = useState();
+
+  function setNum(value){
+    if (!secondNum){
+      if (!operation){
+        const num1 = firstNum.toString() + value.toString();
+        setFirstNum(num1);
+      }
+      else {
+        const num2 = secondNum.toString() + value.toString();
+        setSecondNum(num2);
+      }
+    }
+    else {
+      const num2 = secondNum.toString() + value.toString();
+      setSecondNum(num2);
+      }
+  }
+
+  function handleOperation(value){
+    if (!firstNum){
+      return;
+    }
+    if (value === '√' || value === 'x²'){
+      const res = calculate(value, parseFloat(firstNum));
+      setFirstNum(res);
+    }
+    else if (value === 'AC'){
+      setFirstNum('');
+      setSecondNum('');
+      setOperation('');
+    }
+    else if (value === '.'){
+      if(!operation){
+        const num1 = firstNum + '.';
+        setFirstNum(num1);
+      }
+      else {
+        if (!secondNum){
+          setSecondNum('0.');
+        }
+        else {
+          const num2 = secondNum + '.';
+          setSecondNum(num2);
+        }
+      }
+    }
+    else if (value === '='){
+      const res = calculate(operation, parseFloat(firstNum), parseFloat(secondNum));
+      setFirstNum(res);
+      setSecondNum('');
+      setOperation('');
+    }
+    else {
+      setOperation(value);
+    }
+  }
+
+  function showResult(){
+    const first = firstNum === undefined ? '' : firstNum.toString();
+    const second = secondNum === undefined ? '' : secondNum.toString();
+    const res = first + operation + second;
+    setResult(res);
+  }
+  useEffect( () => { showResult()})
 
   return (
     <div className='calculator'>
       <div className='result'>
-        {/**
-         * Print the result of the calculation here
-         */}
+        {result}
       </div>
       <div className='calculator-digits'>
-         {/**
-          * Enter here all of the MathOperation and DigitButton components
-          */}
-      </div>
+      {operationTypes.map((item,i)=> 
+        <MathOperation key = {i} type = {item} onClick = {handleOperation}/>
+      )}
+      {numbers.map((item,i)=> 
+        <DigitButton key = {i} value = {i} onClick = {setNum}/>
+      )}
     </div>
-  );
-}
+  </div>
+  )};
 
 export default Calc;
