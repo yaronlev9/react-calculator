@@ -75,7 +75,6 @@ describe(`${projectName} - test suite`, () => {
       await page.click(`#op_${test}`);
       await page.click(`#digit_${num1}`);
       await page.click('#equal');
-      console.log('numbers:', num1, num2)
       const result = await page.$('.result');
       const resultsValue = await (
         await result.getProperty('innerText')
