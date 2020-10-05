@@ -99,7 +99,7 @@ function Calc() {
   function showResult(){
     const first = firstNum === undefined ? '' : firstNum.toString();
     const second = secondNum === undefined ? '' : secondNum.toString();
-    const res = first + operation + second;
+    const res = first + ' ' + operation + ' ' + second;
     setResult(res);
   }
   useEffect( () => { showResult()})
